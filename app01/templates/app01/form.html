@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Importar {{ format }}</h3>
+<form action=""  method="post" id="book_form" enctype="multipart/form-data">
+	{% csrf_token %}
+	<table>
+	{{ form }}
+	</table>
+	<input type="submit" class="btn btn-success">
+</form>
+{% if data %}
+	<hr>
+	<table class="table">
+	{% for row in data %}
+		<tr>
+		{% for cell in row %}
+			<td>{{ cell }}</td>
+		{% endfor %}
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+{% endblock %}
