@@ -33,7 +33,7 @@ class BuyingItem(models.Model):
     """
     基础资料
     """
-    no = models.IntegerField(verbose_name="NO")
+    no = models.IntegerField(verbose_name="NO",null=True)
     item_no = models.CharField(max_length=32,verbose_name="商品编号",null=False)
     choice_name = models.CharField(max_length=200,verbose_name="选项",null=False)
     name = models.CharField(max_length=200,verbose_name="商品名称",null=False)

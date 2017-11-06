@@ -90,8 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'mzERP',
         'USER': 'caicai',  
-        'PASSWORD': 'password',  
-        'HOST': '127.0.0.1',  
+        'PASSWORD': 'asdjkl123',
+        'HOST': '192.168.31.143',
         'PORT': '3306', 
     }
 }

@@ -192,6 +192,16 @@ def export_xls(request):
     except Exception as e:
         raise e
 
+def export_xls_BuyingItem(request):
+    fields = ["id", "no", "item_no", "choice_name", "name","buying_price","face_price","add_price","native_trans_fee"
+              ,"price", "national_tran_fee", "service_charge_rate", "service_charge_fee","profit","chinese_kind_name","english_name","weight"
+              , "volume", "american_price", "real_american_price", "hs_code", "upload_day", "downshelf_day", "leftdays", "buying_name"
+              ,"buying_url","status","korea_name","chinese_name","transport_way_id","clearance_sign_id","tariff","add_express_fee"]
+    queryset = BuyingItem.objects.all()
+    try:
+        return export_xlwt(BuyingItem, queryset.values_list(*fields), fields)
+    except Exception as e:
+        raise e
 
 def export_xlwt(model, values_list, fields):
     import xlwt
@@ -201,8 +211,8 @@ def export_xlwt(model, values_list, fields):
     sheet = book.add_sheet(modelname)
 
     default_style = xlwt.Style.default_style
-    datetime_style = xlwt.easyxf(num_format_str='dd/mm/yyyy hh:mm')
-    date_style = xlwt.easyxf(num_format_str='dd/mm/yyyy')
+    datetime_style = xlwt.easyxf(num_format_str='yyyy-mm-dd hh:mm')
+    date_style = xlwt.easyxf(num_format_str='yyyy-mm-dd')
 
     for j, f in enumerate(fields):
         sheet.write(0, j, fields[j])

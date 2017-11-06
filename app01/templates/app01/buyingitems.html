@@ -89,7 +89,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">创建学生</h4>
+                <h4 class="modal-title" id="myModalLabel">创建基础资料</h4>
             </div>
             <div class="modal-body">
 
@@ -132,6 +132,47 @@
 
                         </div>
                     </div>
+
+
+
+
+                    NO        no
+商品编号   item_no
+选项      choice_name
+商品名称   name
+采购单价   buying_price
+表面价     face_price
+加减金额    add_price
+国内运费    native_trans_fee
+实际售价    price
+国际物流费  national_tran_fee
+平台手续费  service_charge_rate
+手续费      service_charge_fee
+利润       profit
+中文品名    chinese_kind_name
+英文品名    english_name
+重量        weight
+体积        volume
+美金单价     american_price
+实际报关美金  real_american_price
+HS编码       hs_code
+产品上传      upload_day
+产品下架      downshelf_day
+剩余日       leftdays
+采购品名      buying_name
+采购地址      buying_url
+状态          status
+韩文名        korea_name
+中文名        chinese_name
+货运方式    transport_way
+通关符号    clearance_sign
+关税       tariff
+快递附加费  add_express_fee
+
+
+
+
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -239,7 +280,7 @@
     /*编辑导出事件*/
     function textinput(){
         $("#exportExecl").click(function(){
-            window.location.href="export_xls"
+            window.location.href="export_xls_BuyingItem"
         })
     }
 
