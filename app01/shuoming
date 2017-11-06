@@ -1,0 +1,65 @@
+
+---采购基础资料
+NO        no
+商品编号   item_no
+选项      choice_name
+商品名称   name
+采购单价   buying_price
+表面价     face_price
+加减金额    add_price
+国内运费    native_trans_fee
+实际售价    price
+国际物流费  national_tran_fee
+平台手续费  service_charge_rate
+手续费      service_charge_fee
+利润       profit
+中文品名    chinese_kind_name
+英文品名    english_name
+重量        weight
+体积        volume
+美金单价     american_price
+实际报关美金  real_american_price
+HS编码       hs_code
+产品上传      upload_day
+产品下架      downshelf_day
+剩余日       leftdays
+采购品名      buying_name
+采购地址      buying_url
+状态          status
+韩文名        korea_name
+中文名        chinese_name
+货运方式    transport_way
+通关符号    clearance_sign
+关税       tariff
+快递附加费  add_express_fee
+
+
+>>> a[0].id
+1
+>>> a[0].clearance_sign
+'불필요'
+>>> a[1].id
+3
+>>> a[1].clearance_sign
+'필요'
+
+
+>>> from app01.models import Transport_way
+>>> a = Transport_way.objects.all()
+>>> a[0].transport_way
+'해상특송'
+>>> a[1].transport_way
+'SINO'
+>>> a[2].transport_way
+'대신'
+>>> a[3].transport_way
+'EMS'
+>>> a[0].id
+1
+>>> a[1].id
+2
+>>> a[2].id
+3
+>>> a[3].id
+4
+>>>

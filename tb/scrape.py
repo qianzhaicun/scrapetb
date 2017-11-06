@@ -11,6 +11,7 @@ from lxml.html import fromstring
 from lxml import etree
 #导入parse模块
 from urllib import parse
+import json
 
 class CsvCallback:
     def __init__(self):
@@ -126,11 +127,11 @@ def link_crawler(start_url, link_regex, robots_url=None, user_agent='wswp',
 if __name__ == "__main__":
     #print(link_crawler("http://date.jobbole.com/",r'^(http://date.jobbole.com/)(\d+)/$'))
     user_agent = 'wswp'
-    url = input('请复制url:')
-    #url = 'https://item.taobao.com/item.htm?id=547627656391&ali_refid=a3_430673_1006:1150119134:N:%E5%AE%A2%E5%8E%85%E7%81%AF:61dc40e224ec86e921314c179963a3a8&ali_trackid=1_61dc40e224ec86e921314c179963a3a8&spm=a2e15.8261149.07626516002.2'
+    #url = input('请复制url:')
+    url = 'https://item.taobao.com/item.htm?id=547627656391&ali_refid=a3_430673_1006:1150119134:N:%E5%AE%A2%E5%8E%85%E7%81%AF:61dc40e224ec86e921314c179963a3a8&ali_trackid=1_61dc40e224ec86e921314c179963a3a8&spm=a2e15.8261149.07626516002.2'
     proxies = None
     html = download(url, user_agent=user_agent, proxies=proxies)
-    print(html)
+    #print(html)
     tree = fromstring(html)
     #atitle = tree.xpath('//title[@id="places_area__row"]/td[@class="w2p_fw"]/text()')[0]
     productName = tree.xpath('//title/text()')[0]
@@ -148,8 +149,20 @@ if __name__ == "__main__":
     itemId = (re.findall(r'id=(.*?)&', url)[0])
     print('aitemid: ' + itemId)
 
-    rangePrice = tree.xpath('//*[@id="J_StrPriceModBox"]')
-    print(rangePrice)
+    rangePrice = tree.xpath('//*[@id="J_StrPriceModBox"]')[0]
+    print(rangePrice.getchildren())
+
+    sku_map = json.loads(re.findall(r'skuMap\s*:\s*(\{.*\})\n\r?', html)[0])
+    sku_dict = {}
+    for k, v in sku_map.items():
+        sku_dict[k] = {
+            'price': v['price'],  # 非推广价
+            'stock': v['stock'],  # 库存
+            'sku_id': v['skuId']  # skuId
+        }
+
+    print(sku_dict)
+
     #rangePrice = tree.xpath('//em[@class="tb-rmb-num"]/text()')[0]
     #print('rangePrice: ' + rangePrice)
     

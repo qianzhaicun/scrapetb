@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'taobao',  
+        'NAME': 'mzERP',
         'USER': 'caicai',  
         'PASSWORD': 'password',  
         'HOST': '127.0.0.1',  
@@ -135,11 +135,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#STATICFILES_DIRS =(
-#
-#    os.path.join(BASE_DIR, 'static'),
-#
-#)
+STATICFILES_DIRS =(
+
+    os.path.join(BASE_DIR, 'static'),
+
+)
 STATIC_ROOT = '/home/caicai/python/django/mysite/mysite/static/'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

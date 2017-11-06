@@ -5,12 +5,15 @@ from app01 import models
 import json
 
 from app01.forms import UserForm
-from .models import Student,Classes
+from .models import Student,Classes,BuyingItem,Transport_way,Clearance_sign
+
 """分页"""
-
-
 from django.core.paginator import Paginator, EmptyPage,\
 PageNotAnInteger
+
+from django.db.models.loading import get_model
+
+import time,datetime
 
 class CustomPaginator(Paginator):
     def __init__(self,current_page,per_pager_num,*args,**kwargs):
@@ -89,9 +92,41 @@ def students(request):
         # If page is out of range deliver last page of results
         stu_list = paginator.page(paginator.num_pages)
 
-    return render(request,'app01/students.html',{'stu_list':stu_list,'cls_list':cls_list,'page': page,'pagenum':pagenum})
+    appname = 'app01'
+    modelname = 'Student'
+    modelobj = get_model(appname, modelname)
+    fields = modelobj._meta.fields
+    verbose_names = [elem.verbose_name for elem in fields]
+
+    return render(request,'app01/students.html',{'stu_list':stu_list,'cls_list':cls_list,'verbose_names':verbose_names,'page': page,'pagenum':pagenum})
     
-    
+def buyingitems(request):
+    item_list = models.BuyingItem.objects.all()
+    trans_list = models.Transport_way.objects.all()
+    sign_list = models.Clearance_sign.objects.all()
+    pagenum = 40
+    paginator = Paginator(item_list, pagenum) # 3 posts in each page
+    page = request.GET.get('page')
+
+    try:
+        item_list_page = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        item_list_page = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        item_list_page = paginator.page(paginator.num_pages)
+
+
+    appname = 'app01'
+    modelname = 'BuyingItem'
+    modelobj = get_model(appname, modelname)
+    fields = modelobj._meta.fields
+    verbose_names = [elem.verbose_name for elem in fields]
+
+
+    return render(request,'app01/buyingitems.html',{'item_list_page':item_list_page,'trans_list':trans_list,'sign_list':sign_list,
+                                                    'verbose_names':verbose_names,'page': page,'pagenum':pagenum})
  
 def add_student(request):
     response = {'status':True,'message': None,'data':None}
@@ -217,4 +252,141 @@ def importExecl(request, format):
     else:
         form = ImportForm()
     return render_to_response("app01/form.html", locals(), context_instance=RequestContext(request))
-    
+
+__s_date = datetime.date (1899, 12, 31).toordinal() - 1
+def getdate(date ):
+    if isinstance(date , float ):
+        date = int(date )
+    d = datetime.date.fromordinal(__s_date + date )
+    return d
+
+def importExeclBuyingItem(request, format):
+    from .forms import ImportFormBuyingItem
+    if request.method == "POST":
+        form = ImportFormBuyingItem(request.POST, request.FILES)
+        if form.is_valid():
+            import_file = request.FILES['import_file']
+            from xlrd import open_workbook
+            wb = open_workbook(file_contents=import_file.read())
+            data = list()
+            for s in wb.sheets():
+                print('Sheet:', s.name)
+                if s.name == "Sheet1":
+                    for row in range(s.nrows):
+                        values_list = []
+                        for col in range(s.ncols):
+                            values_list.append(s.cell(row, col).value)
+
+                        if values_list[2] != "":
+                            data.append(values_list)  #
+            print('data')
+            print(data)
+            if len(data) > 1:
+                ItemList = []
+                num = 0
+                for a in data:
+                    if a[2] != "":
+                        num = num + 1
+                print(num)
+                for i in range(num):
+                    if i > 0:
+                      aitem = data[i]
+                      if data[i][2] != "":
+                          if aitem[0] == "":
+                              aitem[0] = 0
+                          if aitem[4] == "":
+                              aitem[4] = 0
+                          if aitem[5] == "":
+                              aitem[5] = 0
+                          if aitem[6] == "":
+                              aitem[6] = 0
+                          if aitem[7] == "":
+                              aitem[7] = 0
+                          if aitem[8] == "":
+                              aitem[8] = 0
+                          if aitem[9] == "":
+                              aitem[9] = 0
+                          if aitem[10] == "":
+                              aitem[10] = 0
+                          if aitem[11] == "":
+                              aitem[11] = 0
+                          if aitem[12] == "":
+                              aitem[12] = 0
+                          if aitem[15] == "":
+                              aitem[15] = 0
+                          if aitem[16] == "":
+                              aitem[16] = 0
+                          if aitem[17] == "":
+                              aitem[17] = 0
+                          if aitem[18] == "":
+                              aitem[18] = 0
+                          if aitem[30] == "":
+                              aitem[30] = 0
+                          if aitem[31] == "":
+                              aitem[31] = 0
+
+                          atransport_way = Transport_way.objects.get(transport_way=aitem[28])
+                          aclearance_sign = Clearance_sign.objects.get(clearance_sign=aitem[29])
+                          # print('atiem20')
+                          # print(aitem[20])
+                          # timestr = "time" + str(aitem[20])
+                          # print('timestr')
+                          # print(timestr)
+                          # t = time.strptime(timestr, "time%m/%d/%Y")
+                          # aitem[20] = str(t.tm_year) + '-' + str(t.tm_mon) + '-' + str(t.tm_mday)
+                          # timestr = "time" + str(aitem[21])
+                          # t = time.strptime(timestr, "time%m/%d/%Y")
+                          # aitem[21] = str(t.tm_year) + '-' + str(t.tm_mon) + '-' + str(t.tm_mday)
+                          aitem[20] = getdate(aitem[20])
+                          aitem[21] = getdate(aitem[21])
+                          #t
+                          #time.struct_time(tm_year=2017, tm_mon=10, tm_mday=17, tm_hour=0, tm_min=0, tm_sec=0,
+                          #                 tm_wday=1, tm_yday=290, tm_isdst=-1)
+
+                          ItemList.append(BuyingItem(no=aitem[0], item_no=aitem[1],choice_name=aitem[2], name=aitem[3],buying_price=aitem[4], face_price=aitem[5]
+                              ,add_price=aitem[6], native_trans_fee=aitem[7],price=aitem[8], national_tran_fee=aitem[9], service_charge_rate=aitem[10]
+                              ,service_charge_fee=aitem[11], profit=aitem[12], chinese_kind_name=aitem[13],english_name=aitem[14], weight = aitem[15], volume = aitem[16]
+                              ,american_price = aitem[17], real_american_price = aitem[18], hs_code = aitem[19], upload_day = aitem[20], downshelf_day = aitem[21],
+                              leftdays = aitem[22], buying_name = aitem[23], buying_url = aitem[24],status=aitem[25],korea_name=aitem[26],chinese_name=aitem[27],
+                              transport_way_id = atransport_way,clearance_sign_id=aclearance_sign,tariff=aitem[30],add_express_fee=aitem[31]))
+                if ItemList:
+                    print('ItemList')
+                    print(len(ItemList))
+                    BuyingItem.objects.bulk_create(ItemList)
+    else:
+        form = ImportFormBuyingItem()
+    return render_to_response("app01/form.html", locals(), context_instance=RequestContext(request))
+#---采购基础资料
+# NO        no
+# 商品编号   item_no
+# 选项      choice_name
+# 商品名称   name
+# 采购单价   buying_price
+# 表面价     face_price
+# 加减金额    add_price
+# 国内运费    native_trans_fee
+# 实际售价    price
+# 国际物流费  national_tran_fee
+# 平台手续费  service_charge_rate
+# 手续费      service_charge_fee
+# 利润       profit
+# 中文品名    chinese_name
+# 英文品名    english_name
+# 重量        weight
+# 体积        volume
+# 美金单价     american_price
+# 实际报关美金  real_american_price
+# HS编码       hs_code
+# 产品上传      upload_day
+# 产品下架      downshelf_day
+# 剩余日       leftdays
+# 采购品名      buying_name
+# 采购地址      buying_url
+# 状态          status
+# 韩文名        korea_name
+# 中文名        chinese_name
+# 货运方式    transport_way
+# 通关符号    clearance_sign
+# 关税       tariff
+# 快递附加费  add_express_fee
+# 运输公司    transport_company

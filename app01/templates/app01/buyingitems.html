@@ -1,4 +1,4 @@
-{% load staticfiles %} 
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +17,14 @@
     </style>
 </head>
 <body>
- 
+
 <div class="container">
     <div style="padding: 20px 0;">
         <a class="btn btn-primary" id="addBtn">添加</a>
         <a class="btn btn-primary" id="exportExecl">导出execl</a>
         <a class="btn btn-primary" id="importExecl">导入execl</a>
     </div>
- 
+
     <div>
         <table class="table table-bordered table-striped">
             <thead>
@@ -35,25 +35,53 @@
             </tr>
             </thead>
             <tbody id="tb">
-            {% for row in stu_list %}
+            {% for row in item_list_page %}
                 <tr nid="{{  row.id }}">
                     <td na="nid">{{ row.id }}</td>
-                    <td na="user">{{ row.username }}</td>
-                    <td na="age">{{ row.age }}</td>
-                    <td na="gender">{{ row.gender }}</td>
-                    <td na="cls_id" cid="{{ row.cs_id }}">{{ row.cs.title }}</td>
+                    <td na="no">{{ row.no }}</td>
+                    <td na="item_no">{{ row.item_no }}</td>
+                    <td na="choice_name">{{ row.choice_name }}</td>
+                    <td na="name">{{ row.name }}</td>
+                    <td na="buying_price">{{ row.buying_price }}</td>
+                    <td na="face_price">{{ row.face_price }}</td>
+                    <td na="add_price">{{ row.add_price }}</td>
+                    <td na="native_trans_fee">{{ row.native_trans_fee }}</td>
+                    <td na="price">{{ row.price }}</td>
+                    <td na="national_tran_fee">{{ row.national_tran_fee }}</td>
+                    <td na="service_charge_rate">{{ row.service_charge_rate }}</td>
+                    <td na="service_charge_fee">{{ row.service_charge_fee }}</td>
+                    <td na="profit">{{ row.profit }}</td>
+                    <td na="chinese_kind_name">{{ row.chinese_kind_name }}</td>
+                    <td na="english_name">{{ row.english_name }}</td>
+                    <td na="weight">{{ row.weight }}</td>
+                    <td na="volume">{{ row.volume }}</td>
+                    <td na="american_price">{{ row.american_price }}</td>
+                    <td na="real_american_price">{{ row.real_american_price }}</td>
+                    <td na="hs_code">{{ row.hs_code }}</td>
+                    <td na="upload_day">{{ row.upload_day }}</td>
+                    <td na="downshelf_day">{{ row.downshelf_day }}</td>
+                    <td na="leftdays">{{ row.leftdays }}</td>
+                    <td na="buying_name">{{ row.buying_name }}</td>
+                    <td na="buying_url">{{ row.buying_url }}</td>
+                    <td na="status">{{ row.status }}</td>
+                    <td na="korea_name">{{ row.korea_name }}</td>
+                    <td na="chinese_name">{{ row.chinese_name }}</td>
+                    <td na="transport_way_id" tid="{{ row.transport_way_id }}" >{{ row.transport_way_id.transport_way }}</td>
+                    <td na="clearance_sign_id" tid="{{ row.clearance_sign_id }}">{{ row.clearance_sign_id.clearance_sign }}</td>
+                    <td na="tariff">{{ row.tariff }}</td>
+                    <td na="add_express_fee">{{ row.add_express_fee }}</td>
                     <td>
                         <a class="glyphicon glyphicon-remove icon del-row"></a><a class="glyphicon glyphicon-ok edit-row"></a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
- 
+
         </table>
     </div>
-    {% include "app01/pagination.html" with page=stu_list %}
+    {% include "app01/pagination.html" with page=item_list_page %}
 </div>
- 
+
 <!-- Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -64,7 +92,7 @@
                 <h4 class="modal-title" id="myModalLabel">创建学生</h4>
             </div>
             <div class="modal-body">
- 
+
                 <form id="fm" class="form-horizontal">
                     {% csrf_token %}
                     <div class="form-group">
@@ -73,14 +101,14 @@
                             <input type="text" class="form-control" name="username" placeholder="姓名">
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">年龄</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="age" placeholder="年龄">
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-10">
@@ -92,7 +120,7 @@
                             </label>
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">班级</label>
                         <div class="col-sm-10">
@@ -101,7 +129,7 @@
                                     <option value="{{ row.id }}">{{ row.title }}</option>
                                 {% endfor %}
                             </select>
- 
+
                         </div>
                     </div>
                 </form>
@@ -114,7 +142,7 @@
         </div>
     </div>
 </div>
- 
+
 <!-- Modal -->
 <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -128,7 +156,7 @@
         </div>
     </div>
 </div>
- 
+
 <!-- Modal -->
 <div class="modal fade" id="eidtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -139,25 +167,25 @@
                 <h4 class="modal-title" id="myModalLabel">编辑学生</h4>
             </div>
             <div class="modal-body">
- 
+
                 <form id="fm" class="form-horizontal">
                     {% csrf_token %}
                     <input type="text" name="nid" style="display: none" />
- 
+
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">姓名</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="user" placeholder="姓名">
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">年龄</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="age" placeholder="年龄">
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">性别</label>
                         <div class="col-sm-10">
@@ -169,7 +197,7 @@
                             </label>
                         </div>
                     </div>
- 
+
                     <div class="form-group">
                         <label for="age" class="col-sm-2 control-label">班级</label>
                         <div class="col-sm-10">
@@ -178,7 +206,7 @@
                                     <option value="{{ row.id }}">{{ row.title }}</option>
                                 {% endfor %}
                             </select>
- 
+
                         </div>
                     </div>
                 </form>
@@ -192,7 +220,7 @@
     </div>
 
 </div>
- 
+
 
 
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.js"></script>
@@ -207,7 +235,7 @@
         textinput();
         importExecl();
     });
- 
+
     /*编辑导出事件*/
     function textinput(){
         $("#exportExecl").click(function(){
@@ -218,7 +246,7 @@
     /*编辑导入事件*/
     function importExecl(){
         $("#importExecl").click(function(){
-            window.location.href="importExecl/xls"
+            window.location.href="importExeclBuyingItem/xls"
         })
     }
     /*
@@ -238,7 +266,7 @@
                     postData[n] = v;
                 }
             });
- 
+
             $.ajax({
                 url: 'edit_student/',
                 type: 'POST',
@@ -254,7 +282,7 @@
             })
         })
     }
-     
+
     /*
    绑定编辑按钮点击事件
      */
@@ -263,7 +291,7 @@
             $('#eidtModal').modal('show');
             //1.获取当前行的所有数据
             // 将数据赋值到对应的对话框的指定位置
- 
+
              $(this).parent().prevAll().each(function () {
                  // cls_id
                  var v = $(this).text();
@@ -282,19 +310,19 @@
                     // n=age
                     // v=12
                     $("#eidtModal input[name='"+ n +"']").val(v)
- 
- 
+
+
                 }
              });
- 
- 
+
+
         })
     }
     function bindDelConfirm() {
         $('#delConfirm').click(function () {
             var rowId = $('#delNid').val();
             console.log(rowId);
-             
+
             $.ajax({
                 url: 'del_student/',
                 type: 'GET',
@@ -307,10 +335,10 @@
                     $('#delModal').modal('hide');
                 }
             })
-             
+
         });
-         
- 
+
+
     }
     function bindDel() {
         $('#tb').on('click','.del-row',function () {
@@ -326,7 +354,7 @@
         })
     }
     function bindSave() {
- 
+
         $('#btnSave').click(function () {
             var postData = {};
             $('#addModal').find('input,select').each(function () {
@@ -340,7 +368,7 @@
                     postData[n] = v;
                 }
             });
- 
+
             /*
             postData = {
                  username: 'asdf',
@@ -349,7 +377,7 @@
                  cls_id: 2
             }
              */
- 
+
             $.ajax({
                 url: 'add_student/',
                 type: 'POST',
@@ -376,28 +404,28 @@
                     }
                 }
             })
- 
+
         });
-         
- 
+
+
     }
     function createRow(postData,nid) {
         var tr = document.createElement('tr');
         $(tr).attr('nid',nid);
- 
+
         var tdId = document.createElement('td');
         tdId.innerHTML = nid;
         $(tr).append(tdId);
- 
+
         var tdUser = document.createElement('td');
         tdUser.innerHTML = postData.username;
         $(tr).append(tdUser);
- 
+
         var tdAge = document.createElement('td');
         tdAge.innerHTML = postData.age;
         $(tr).append(tdAge);
- 
- 
+
+
         var tdGender = document.createElement('td');
         if(postData.gender == "0"){
             tdGender.innerHTML = 'False';
@@ -405,20 +433,20 @@
              tdGender.innerHTML = 'True';
         }
         $(tr).append(tdGender);
- 
- 
+
+
         var tdClass = document.createElement('td');
         var text = $('select[name="cls_id2"]').find('option[value="'+ postData.cls_id +'"]').text();
-        
+
         var text = $('#addClass').find("option:selected").text();
- 
+
 
         tdClass.innerHTML = text;
         $(tr).append(tdClass);
- 
+
         var tdHandle = '<td> <a class="glyphicon glyphicon-remove icon del-row"></a><a class="glyphicon glyphicon-ok edit-row"></a> </td>';
         $(tr).append(tdHandle);
- 
+
         $('#tb').append(tr);
     }
 </script>

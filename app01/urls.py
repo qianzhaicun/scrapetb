@@ -14,7 +14,12 @@ urlpatterns = [
     url(r'^edit_user-(\d+)/', views.edit_user),  
 
     url(r'^export_xls/',views.export_xls),  
-    url(r'^importExecl/(?P<format>[a-z]+)$',views.importExecl),            
+    url(r'^importExecl/(?P<format>[a-z]+)$',views.importExecl),
+
+    #buyingitems
+
+    url(r'^BuyingItems/$', views.buyingitems,name='buyingitems'),
+    url(r'^BuyingItems/importExeclBuyingItem/(?P<format>[a-z]+)$', views.importExeclBuyingItem),
 ]
 
 
