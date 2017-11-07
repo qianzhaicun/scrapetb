@@ -270,6 +270,24 @@ def getdate(date ):
     d = datetime.date.fromordinal(__s_date + date )
     return d
 
+def che(request):
+    if request.method=="POST":
+        check_box_list = request.POST.getlist('check_box_list')
+
+        if check_box_list:
+            print(check_box_list)
+            for i in check_box_list:
+                namelist = request.POST.getlist(str(i))
+                print('namelist')
+                print(namelist)
+            return HttpResponse("ok")
+        else:
+            print("fail")
+            return HttpResponse("fail")
+    else:
+        a = [1,2,3,4]
+        return render(request,'app01/che.html',{'a':a})
+
 def importExeclBuyingItem(request, format):
     from .forms import ImportFormBuyingItem
     if request.method == "POST":

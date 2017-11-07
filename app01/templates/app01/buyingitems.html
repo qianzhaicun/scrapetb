@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>商品资料</title>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
      <!-- 引入 Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +25,8 @@
         <a class="btn btn-primary" id="importExecl">导入execl</a>
     </div>
 
+    <form action="" method="POST"> {% csrf_token %}
+    <input type="submit" value="保存所选"/>
     <div>
         <table class="table table-bordered table-striped">
             <thead>
@@ -37,41 +39,41 @@
             <tbody id="tb">
             {% for row in item_list_page %}
                 <tr nid="{{  row.id }}">
-                    <td na="nid">{{ row.id }}</td>
-                    <td na="no">{{ row.no }}</td>
-                    <td na="item_no">{{ row.item_no }}</td>
-                    <td na="choice_name">{{ row.choice_name }}</td>
-                    <td na="name">{{ row.name }}</td>
-                    <td na="buying_price">{{ row.buying_price }}</td>
-                    <td na="face_price">{{ row.face_price }}</td>
-                    <td na="add_price">{{ row.add_price }}</td>
-                    <td na="native_trans_fee">{{ row.native_trans_fee }}</td>
-                    <td na="price">{{ row.price }}</td>
-                    <td na="national_tran_fee">{{ row.national_tran_fee }}</td>
-                    <td na="service_charge_rate">{{ row.service_charge_rate }}</td>
-                    <td na="service_charge_fee">{{ row.service_charge_fee }}</td>
-                    <td na="profit">{{ row.profit }}</td>
-                    <td na="chinese_kind_name">{{ row.chinese_kind_name }}</td>
-                    <td na="english_name">{{ row.english_name }}</td>
-                    <td na="weight">{{ row.weight }}</td>
-                    <td na="volume">{{ row.volume }}</td>
-                    <td na="american_price">{{ row.american_price }}</td>
-                    <td na="real_american_price">{{ row.real_american_price }}</td>
-                    <td na="hs_code">{{ row.hs_code }}</td>
-                    <td na="upload_day">{{ row.upload_day }}</td>
-                    <td na="downshelf_day">{{ row.downshelf_day }}</td>
-                    <td na="leftdays">{{ row.leftdays }}</td>
-                    <td na="buying_name">{{ row.buying_name }}</td>
-                    <td na="buying_url">{{ row.buying_url }}</td>
-                    <td na="status">{{ row.status }}</td>
-                    <td na="korea_name">{{ row.korea_name }}</td>
-                    <td na="chinese_name">{{ row.chinese_name }}</td>
-                    <td na="transport_way_id" tid="{{ row.transport_way_id }}" >{{ row.transport_way_id.transport_way }}</td>
-                    <td na="clearance_sign_id" tid="{{ row.clearance_sign_id }}">{{ row.clearance_sign_id.clearance_sign }}</td>
-                    <td na="tariff">{{ row.tariff }}</td>
-                    <td na="add_express_fee">{{ row.add_express_fee }}</td>
+                    <td na="nid"><input type="text" name="{{i}}" value = "{{ row.id }}" ></td>
+                    <td na="no"><input type="text" name="{{i}}">{{ row.no }}</td>
+                    <td na="item_no"><input type="text" name="{{i}}">{{ row.item_no }}</td>
+                    <td na="choice_name"><input type="text" name="{{i}}">{{ row.choice_name }}</td>
+                    <td na="name"><input type="text" name="{{i}}">{{ row.name }}</td>
+                    <td na="buying_price"><input type="text" name="{{i}}">{{ row.buying_price }}</td>
+                    <td na="face_price"><input type="text" name="{{i}}">{{ row.face_price }}</td>
+                    <td na="add_price"><input type="text" name="{{i}}">{{ row.add_price }}</td>
+                    <td na="native_trans_fee"><input type="text" name="{{i}}">{{ row.native_trans_fee }}</td>
+                    <td na="price"><input type="text" name="{{i}}">{{ row.price }}</td>
+                    <td na="national_tran_fee"><input type="text" name="{{i}}">{{ row.national_tran_fee }}</td>
+                    <td na="service_charge_rate"><input type="text" name="{{i}}">{{ row.service_charge_rate }}</td>
+                    <td na="service_charge_fee"><input type="text" name="{{i}}">{{ row.service_charge_fee }}</td>
+                    <td na="profit"><input type="text" name="{{i}}">{{ row.profit }}</td>
+                    <td na="chinese_kind_name"><input type="text" name="{{i}}">{{ row.chinese_kind_name }}</td>
+                    <td na="english_name"><input type="text" name="{{i}}">{{ row.english_name }}</td>
+                    <td na="weight"><input type="text" name="{{i}}">{{ row.weight }}</td>
+                    <td na="volume"><input type="text" name="{{i}}">{{ row.volume }}</td>
+                    <td na="american_price"><input type="text" name="{{i}}">{{ row.american_price }}</td>
+                    <td na="real_american_price"><input type="text" name="{{i}}">{{ row.real_american_price }}</td>
+                    <td na="hs_code"><input type="text" name="{{i}}">{{ row.hs_code }}</td>
+                    <td na="upload_day"><input type="text" name="{{i}}">{{ row.upload_day }}</td>
+                    <td na="downshelf_day"><input type="text" name="{{i}}">{{ row.downshelf_day }}</td>
+                    <td na="leftdays"><input type="text" name="{{i}}">{{ row.leftdays }}</td>
+                    <td na="buying_name"><input type="text" name="{{i}}">{{ row.buying_name }}</td>
+                    <td na="buying_url"><input type="text" name="{{i}}">{{ row.buying_url }}</td>
+                    <td na="status"><input type="text" name="{{i}}">{{ row.status }}</td>
+                    <td na="korea_name"><input type="text" name="{{i}}">{{ row.korea_name }}</td>
+                    <td na="chinese_name"><input type="text" name="{{i}}">{{ row.chinese_name }}</td>
+                    <td na="transport_way_id" tid="{{ row.transport_way_id }}" ><input type="text" name="{{i}}">{{ row.transport_way_id.transport_way }}</td>
+                    <td na="clearance_sign_id" tid="{{ row.clearance_sign_id }}"><input type="text" name="{{i}}">{{ row.clearance_sign_id.clearance_sign }}</td>
+                    <td na="tariff"><input type="text" name="{{i}}">{{ row.tariff }}</td>
+                    <td na="add_express_fee"><input type="text" name="{{i}}">{{ row.add_express_fee }}</td>
                     <td>
-                        <a class="glyphicon glyphicon-remove icon del-row"></a><a class="glyphicon glyphicon-ok edit-row"></a>
+                        <a class="glyphicon glyphicon-ok edit-row"></a>
                     </td>
                 </tr>
             {% endfor %}
@@ -79,6 +81,8 @@
 
         </table>
     </div>
+    </form>
+
     {% include "app01/pagination.html" with page=item_list_page %}
 </div>
 

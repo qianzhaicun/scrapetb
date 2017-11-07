@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^BuyingItems/$', views.buyingitems,name='buyingitems'),
     url(r'^BuyingItems/importExeclBuyingItem/(?P<format>[a-z]+)$', views.importExeclBuyingItem),
     url(r'^BuyingItems/export_xls_BuyingItem/',views.export_xls_BuyingItem),
+    url(r'^che/', views.che ,name="che"),
 ]
 
 
